@@ -96,7 +96,7 @@ def beachball_pygmt(filename, stations, mt, plot_all=False):
     fig.meca(region=[-1.5, 1.5, -1.5, 1.5], projection='m0/0/5c', scale='3c',
              convention="mt", G='grey50', spec=focal_mechanism, N=False)
     # Launch the GMT polar function from pygmt wrapper.
-    _pygmt_polar(stations, symbol='t0.40c', comp_fill='black', mt_outline='red')
+    _pygmt_polar(stations, symbol='t0.40c', comp_fill='black', mt_outline=None)
 
     # fig.show(dpi=300, method="external")
     fig.savefig(filename, show=True)
