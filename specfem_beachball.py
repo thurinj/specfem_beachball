@@ -5,7 +5,6 @@ import obspy
 import numpy as np
 from obspy.taup import TauPyModel
 import os
-import matplotlib.pyplot as pyplot
 from pygmt.helpers import build_arg_string, use_alias
 import argparse
 
@@ -94,17 +93,15 @@ def beachball_pygmt(filename, stations, mt, plot_all=False):
 
     # Initialize the pygmt plot with the beachball plot
     fig = pygmt.Figure()
-    fig.meca(region=[-1.2, 1.2, -1.2, 1.2], projection='m0/0/5c', scale='3c',
+    fig.meca(region=[-1.5, 1.5, -1.5, 1.5], projection='m0/0/5c', scale='3c',
              convention="mt", G='grey50', spec=focal_mechanism, N=False)
-    # Launch the GMT polar function from pygmt wrapper. 
-    _pygmt_polar(stations, symbol='t0.40c', comp_fill='black')
+    # Launch the GMT polar function from pygmt wrapper.
+    _pygmt_polar(stations, symbol='t0.40c', comp_fill='black', mt_outline='red')
 
     # fig.show(dpi=300, method="external")
     fig.savefig(filename, show=True)
 
 # Define aliases for the pygmt function. Please refer to GMT 6.2.0 `polar` function documentation for a complete overview of all the available options and option details.
-
-
 @use_alias(
     D='offset',
     J='projection',
@@ -127,11 +124,10 @@ def _pygmt_polar(trace_list, **kwargs):
     defaultKwargs = {
         'D': '0/0',
         'J': 'm0/0/5c',
-        'M': '9.9c',
+        'M': '12.92c',
         'T': '+f0.18c'
     }
     kwargs = {**defaultKwargs, **kwargs}
-    print(kwargs)
 
     colorcodes = {
         "red": "255/0/0",
@@ -145,7 +141,7 @@ def _pygmt_polar(trace_list, **kwargs):
             kwargs[key] = colorcodes[kwargs[key]]
         except:
             pass
-    print(trace_list)
+
     tmp_filename = 'polar_temp.txt'
     with open(tmp_filename, 'w') as f:
         for sta in trace_list:
