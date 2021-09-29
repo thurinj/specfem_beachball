@@ -15,6 +15,7 @@ args = parser.parse_args()
 
 event_file = args.CMTSOLUTION
 stations_file = args.STATIONS
+model = "ak135"
 
 
 class Station():
@@ -163,7 +164,7 @@ def _pygmt_polar(trace_list, **kwargs):
 station_coords = stations_list(stations_file)
 event = CMTSolution(event_file)
 
-taupmodel = TauPyModel(model="ak135")
+taupmodel = TauPyModel(model=model)
 for sta in station_coords:
     sta_lat = float(sta.latitude)
     sta_lon = float(sta.longitude)
